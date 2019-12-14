@@ -17,7 +17,7 @@ public class Task4 implements Task {
      */
     @Override
     public void run() throws IOException {
-        Properties properties = read("C:\\Users\\Алексей\\IdeaProjects\\lab-2-BiteBro\\src\\resources\\database.properties");
+        Properties properties = read("resources/database.properties");
 
         System.out.println(properties.getProperty("db.mysql.driver.class"));
         System.out.println(properties.getProperty("db.postgres.driver.class"));
@@ -41,8 +41,10 @@ public class Task4 implements Task {
      */
     private Properties read(String path) {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream(path)) {
-            properties.load(fis);
+
+        try (InputStream in = ClassLoader.getSystemResourceAsStream(path)) {
+            properties.load(in);
+            return properties; }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
